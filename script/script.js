@@ -29,7 +29,7 @@ function operate(number1, operator, number2) {
         case '-':
             result = subtract(number1, number2);
             break;
-        case '*':
+        case 'x':
             result = multiply(number1, number2);
             break;
         case '/':
@@ -85,35 +85,66 @@ function displayNumber(event) {
 }
 
 function displayOperator(event) {
-    screen.textContent = event.target.textContent;
+    let screenText = screen.textContent;
+    const optClicked = event.target.textContent;
+    screenText = optClicked;
+    screen.textContent = screenText;
 }
 
+let number1 = '';
+let number2 = '';
+let operator = '';
+let result = '';
 
-function calculate() {
-    let number1;
-    let number2;
-    let operator;
-// IF !number1, GET Input for it
-    //display the number while it being inputted
-    // store it in number1
-    if (!number1) {
-        number.forEach(button => button.addEventListener('click', () => displayNumber(event)))
-        number1Value = screen.textContent;
-        number1 = number1Value;
-    } else if (number1 && !operator) {
-// IF number1 exist and operator not exist
-    // Get input for operator
-    // display it 
-    // store it into operator
-
+// Number handler
+number.forEach(button => button.addEventListener('click', event => {
+    const num = event.target.textContent;
+    if (!operator) {
+        number1 += num;
+        screen.textContent = number1;
+    } else {
+        number2 += num;
+        screen.textContent = number2;
     }
+}))
+
+// Operator handler
+operatorBtn.forEach(button => button.addEventListener('click', event => {
+    if (number1 && !operator) {
+        operator = event.target.textContent;
+        screen.textContent = operator;
+    } else if (number1 && operator && number2) {
+        result = operate(parseFloat(number1), operator, parseFloat(number2));
+        screen.textContent = result;
+
+        // reset the value after calculating
+        operator = event.target.textContent;
+        number1 = result;
+        number2 = '';
+        result = '';
+    }
+}))
+
+// equal handler
+equalBtn.addEventListener('click', () => {
+    if (number1 && operator && number2) {
+        result = operate(parseFloat(number1), operator, parseFloat(number2));
+        screen.textContent = result;
+    }
+})
+
+
+
+// IF number1 exist and operator not exist
+    // Get input for operator
+    // display it 
+    // store it into operator
 
 // If number1 exist, operator exist, GET input for number2
     // display it while being inputted
     // store it in number2
 // IF number1, parameter, and number2 exist
     // execute the operations
-}
 
 // IF !number1, GET Input for it
     //display the number while it being inputted
@@ -128,4 +159,3 @@ function calculate() {
 // IF number1, parameter, and number2 exist
     // execute the operations
 
-calculate();
