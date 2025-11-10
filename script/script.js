@@ -20,11 +20,14 @@ function divide(num1, num2) {
 function isDecimal(num) {
     return num % 1 !== 0;
 }
+const screen = document.querySelector('.screen');
 
 function operate(number1, operator, number2) {
     if (!number1 && operator === '-') {
         number1 = 0;
-    } 
+    } else if (number1 && operator === '/' && number2 == 0 ) {
+        alert(`can't divide number with 0`)
+    }
     let result;
     switch (operator) {
         case '+':
@@ -51,8 +54,6 @@ function operate(number1, operator, number2) {
 }
 
 // list of UI
-const screen = document.querySelector('.screen');
-
 const numberContainer = document.querySelector('#number-container');
 const number = document.querySelectorAll('.number');
     const zero = document.querySelector('.zero');
@@ -65,6 +66,8 @@ const number = document.querySelectorAll('.number');
     const seven = document.querySelector('.seven');
     const eight = document.querySelector('.eight');
     const nine = document.querySelector('.nine');
+    const decimal = document.querySelector('.decimal');
+    const backspace = document.querySelector('delete')
 
 const optContainer = document.querySelector('#operator-container');
 const operatorBtn = document.querySelectorAll('.operator');
@@ -125,6 +128,18 @@ number.forEach(button => button.addEventListener('click', event => {
     }
 }))
 
+// decimal dot handler
+decimal.addEventListener('click', event => {
+    const decimalDot = event.target.textContent;
+    if (!operator && !(number1.includes('.'))) {
+        number1 += decimalDot;
+        screen.textContent = number1;
+    } else if (!(number2.includes('.'))) {
+        number2 += decimalDot;
+        screen.textContent = number2;
+    }
+})
+
 // Operator handler
 operatorBtn.forEach(button => button.addEventListener('click', event => {
     if (number1 && !operator) {
@@ -148,9 +163,6 @@ equalBtn.addEventListener('click', () => {
         result = operate(parseFloat(number1), operator, parseFloat(number2));
         screen.textContent = result;
     } 
-    // else if (parseFloat(number1) === 0, operator === '/', parseFloat(number2) !== 0 ) {
-    //     screen.textContent = `are you mad? you can't divide zero with other number`
-    // }
 })
 
 clearBtn.addEventListener('click', () => {
