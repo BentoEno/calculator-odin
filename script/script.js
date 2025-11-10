@@ -17,10 +17,14 @@ function divide(num1, num2) {
     return num1 / num2;
 }
 
+function isDecimal(num) {
+    return num % 1 !== 0;
+}
+
 function operate(number1, operator, number2) {
     if (!number1 && operator === '-') {
         number1 = 0;
-    }
+    } 
     let result;
     switch (operator) {
         case '+':
@@ -38,6 +42,10 @@ function operate(number1, operator, number2) {
         default:
             alert('please enter a valid operator')
             break;
+    }
+
+    if (isDecimal(result)) {
+        return result.toFixed(2);
     }
     return result;
 }
@@ -130,32 +138,15 @@ equalBtn.addEventListener('click', () => {
     if (number1 && operator && number2) {
         result = operate(parseFloat(number1), operator, parseFloat(number2));
         screen.textContent = result;
+    } else if (parseFloat(number1) === 0, operator === '/', parseFloat(number2) !== 0 ) {
+        screen.textContent = `are you mad? you can't divide zero with other number`
     }
 })
 
-
-
-// IF number1 exist and operator not exist
-    // Get input for operator
-    // display it 
-    // store it into operator
-
-// If number1 exist, operator exist, GET input for number2
-    // display it while being inputted
-    // store it in number2
-// IF number1, parameter, and number2 exist
-    // execute the operations
-
-// IF !number1, GET Input for it
-    //display the number while it being inputted
-    // store it in number1
-// IF number1 exist and operator not exist
-    // Get input for operator
-    // display it 
-    // store it into operator
-// If number1 exist, operator exist, GET input for number2
-    // display it while being inputted
-    // store it in number2
-// IF number1, parameter, and number2 exist
-    // execute the operations
-
+clearBtn.addEventListener('click', () => {
+    number1 = '';
+    number2 = '';
+    operator = '';
+    result = '';
+    screen.textContent = '0';
+})
