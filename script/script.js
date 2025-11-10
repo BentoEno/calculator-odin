@@ -107,6 +107,15 @@ let result = '';
 // Number handler
 number.forEach(button => button.addEventListener('click', event => {
     const num = event.target.textContent;
+    // code to start new calculation when user press number
+    if (screen.textContent == result) {
+        number1 = '';
+        number2 = '';
+        result = '';
+        operator = '';
+    }
+    
+    // code to enter number
     if (!operator) {
         number1 += num;
         screen.textContent = number1;
@@ -138,9 +147,10 @@ equalBtn.addEventListener('click', () => {
     if (number1 && operator && number2) {
         result = operate(parseFloat(number1), operator, parseFloat(number2));
         screen.textContent = result;
-    } else if (parseFloat(number1) === 0, operator === '/', parseFloat(number2) !== 0 ) {
-        screen.textContent = `are you mad? you can't divide zero with other number`
-    }
+    } 
+    // else if (parseFloat(number1) === 0, operator === '/', parseFloat(number2) !== 0 ) {
+    //     screen.textContent = `are you mad? you can't divide zero with other number`
+    // }
 })
 
 clearBtn.addEventListener('click', () => {
