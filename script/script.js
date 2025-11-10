@@ -67,7 +67,7 @@ const number = document.querySelectorAll('.number');
     const eight = document.querySelector('.eight');
     const nine = document.querySelector('.nine');
     const decimal = document.querySelector('.decimal');
-    const backspace = document.querySelector('delete')
+    const backspace = document.querySelector('.delete');
 
 const optContainer = document.querySelector('#operator-container');
 const operatorBtn = document.querySelectorAll('.operator');
@@ -78,29 +78,6 @@ const operatorBtn = document.querySelectorAll('.operator');
     const equalBtn = document.querySelector('.equal');
 
 const clearBtn = document.querySelector('.clear');
-
-
-if (!screen.textContent) {screen.textContent = '0';}
-
-// display number on screen onclick
-function displayNumber(event) {
-    let screenText = screen.textContent;
-    const numberClicked = event.target.textContent;
-
-   if (screenText === '0') {
-     screenText = numberClicked;
-   } else {
-    screenText += numberClicked;
-   }
-   screen.textContent = screenText;
-}
-
-function displayOperator(event) {
-    let screenText = screen.textContent;
-    const optClicked = event.target.textContent;
-    screenText = optClicked;
-    screen.textContent = screenText;
-}
 
 let number1 = '';
 let number2 = '';
@@ -165,10 +142,29 @@ equalBtn.addEventListener('click', () => {
     } 
 })
 
+// clear handle
 clearBtn.addEventListener('click', () => {
     number1 = '';
     number2 = '';
     operator = '';
     result = '';
     screen.textContent = '0';
+})
+
+// backspace handler
+backspace.addEventListener('click', () => {
+    if (!operator) {
+        number1 = number1.slice(0, -1)
+        screen.textContent = number1;
+    } else if (number1 && !number2) {
+        operator = '';
+        screen.textContent = number1;
+    } else {
+        number2 = number2.slice(0, -1)
+        screen.textContent = number2;
+    }
+
+    if (!screen.textContent) {
+        screen.textContent = '0';
+    }
 })
